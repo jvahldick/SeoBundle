@@ -1,0 +1,16 @@
+{# description e keywords fazem parte do meta name #}
+{% set description = seo_get_description() %}
+{% if description %}
+    <meta name="description" content="{{ description|striptags }}" />
+{% endif %}
+
+{% set keywords = seo_get_keywords() %}
+{% if keywords %}
+    <meta name="keywords" content="{{ seo_get_keywords()|striptags }}" />
+{% endif %}
+
+{# definido em metas[name] #}
+{% set metas = seo_get_meta_names() %}
+{% for key, meta in metas %}
+    <meta name="{{ key }}" content="{{ meta|striptags }}" />
+{% endfor %}

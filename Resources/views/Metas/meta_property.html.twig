@@ -1,0 +1,4 @@
+{% set properties = seo_get_meta_properties() %}
+{% for key, content in properties  %}
+    <meta property='{{ key }}' content='{{ content }}' />
+{% endfor %}

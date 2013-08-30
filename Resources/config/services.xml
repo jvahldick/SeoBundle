@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="jhv.twig_extension.seo.class">JHV\Bundle\SeoBundle\Twig\Extension\SeoExtension</parameter>
+    </parameters>
+
+    <services>
+        <!-- Manusear seo, independente de ter gerenciador -->
+        <service id="jhv.factory.seo" class="%jhv.factory.seo.class%" >
+            <argument>%jhv.entity.seo.class%</argument>
+            <argument type="service" id="service_container" />
+            <argument>null</argument>
+        </service>
+
+        <!-- Extensão TWIG -->
+        <service id="twig.extension.seo" class="%jhv.twig_extension.seo.class%">
+            <argument type="service" id="service_container" />
+            <tag name="twig.extension" />
+        </service>
+
+        <!-- Data Handler -->
+        <service id="jhv.handler.seo" class="%jhv.handler.seo.class%">
+            <argument>%jhv.default_data.seo.parameter%</argument>
+
+            <!-- Avançado -->
+            <call method="setObject">
+                <argument type="service" id="jhv.factory_caller.seo" />
+            </call>
+        </service>
+
+        <!-- Avançado -->
+        <service id="jhv.factory_caller.seo" class="%jhv.entity.seo.class%" factory-service="jhv.factory.seo" factory-method="getSeo" />
+    </services>
+
+</container>

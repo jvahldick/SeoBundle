@@ -1,0 +1,28 @@
+{
+
+    "name"          : "jhv/seo-bundle",
+    "type"          : "symfony-bundle",
+    "description"   : "Seo data manager",
+    "keywords"      : ["symfony bundle", "seo", "seo management"],
+
+    "authors": [
+        {
+            "name"      : "Jorge Vahldick",
+            "email"     : "jvahldick@gmail.com"
+        }
+    ],
+
+    "license"           : "MIT",
+    "minimum-stability" : "beta",
+
+    "require": {
+        "symfony/framework-bundle": "~2.3"
+    },
+
+    "autoload": {
+        "psr-0": { "JHV\\Bundle\\SeoBundle": "" }
+    },
+
+    "target-dir": "JHV/Bundle/SeoBundle"
+
+}

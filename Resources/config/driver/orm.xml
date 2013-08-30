@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="jhv.repository.seo.class">Doctrine\ORM\EntityRepository</parameter>
+        <parameter key="jhv.subscriber.seo.class">JHV\Bundle\SeoBundle\EventListener\SeoSubscriber</parameter>
+    </parameters>
+
+    <services>
+        <!-- EntityManager (not public) -->
+        <service id="jhv.entity_manager.seo" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager">
+            <argument>%jhv_seo.db_manager.name%</argument>
+        </service>
+
+        <!-- Repository of SEO Object -->
+        <service id="jhv.repository.seo" class="%jhv.repository.seo.class%">
+            <argument type="service" id="jhv.entity_manager.seo" />
+            <argument type="service">
+                <service
+                        factory-service="jhv.entity_manager.seo"
+                        factory-method="getClassMetadata"
+                        class="Doctrine\ORM\Mapping\ClassMetadata"
+                        >
+                    <argument>%jhv.entity.seo.class%</argument>
+                </service>
+            </argument>
+        </service>
+
+        <!-- SEO Manager -->
+        <service id="jhv.manager.seo" class="%jhv.manager.seo.class%">
+            <argument type="service" id="jhv.entity_manager.seo" />
+            <argument type="service" id="jhv.repository.seo" />
+        </service>
+
+        <!-- Sitemap Manager -->
+        <service id="jhv.sitemap_manager.seo" class="%jhv.sitemap_manager.seo.class%">
+            <argument type="service" id="jhv.manager.seo" />
+            <argument type="service" id="jhv.templating.seo" />
+            <argument />
+        </service>
+
+        <!-- Subscriber to change dates (created, updated) -->
+        <service id="jhv.subscriber.seo" class="%jhv.subscriber.seo.class%" public="false">
+            <tag name="doctrine.event_subscriber" />
+        </service>
+    </services>
+
+</container>
