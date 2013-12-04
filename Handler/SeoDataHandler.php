@@ -101,7 +101,7 @@ class SeoDataHandler implements SeoDataHandlerInterface
     public function getKeywords()
     {
         $keywordsSeparator  = (isset($this->defaultData['separators']['keywords'])) ? $this->defaultData['separators']['keywords'] : ', ';
-        $defaultKeywords    = $this->getMetas('name', 'keywords');
+        $defaultKeywords    = $this->getMeta('name', 'keywords');
         $keywords           = $this->object->getKeywords();
 
         if (empty($keywords)) {
@@ -121,8 +121,15 @@ class SeoDataHandler implements SeoDataHandlerInterface
         $data           = array();
 
         if (null !== $key) {
-            if (isset($metas[$key])) {
+            if (isset($metas[$key]) && count($metas[$key])) {
                 $data = $metas[$key];
+                if (isset($defaultMetas[$key]) && is_array($defaultMetas[$key])) {
+                    foreach ($defaultMetas[$key] as $k => $v) {
+                        if (false == array_key_exists($k, $data)) {
+                            $data[$k] = $v;
+                        }
+                    }
+                }
             } else if (isset($defaultMetas[$key])) {
                 $data = $defaultMetas[$key];
             }

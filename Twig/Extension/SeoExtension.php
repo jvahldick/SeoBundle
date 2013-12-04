@@ -32,7 +32,6 @@ class SeoExtension extends \Twig_Extension
             new \Twig_SimpleFunction('seo_get_title', array($this, 'getTitle')),
             new \Twig_SimpleFunction('seo_get_description', array($this, 'getMetaDescription')),
             new \Twig_SimpleFunction('seo_get_keywords', array($this, 'getMetaKeywords')),
-            new \Twig_SimpleFunction('seo_get_title', array($this, 'getTitle')),
             new \Twig_SimpleFunction('seo_get_meta_names', array($this, 'getMetaNames')),
             new \Twig_SimpleFunction('seo_get_meta_charset', array($this, 'getMetaCharset')),
             new \Twig_SimpleFunction('seo_get_meta_properties', array($this, 'getMetaProperties')),

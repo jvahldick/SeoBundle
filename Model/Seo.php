@@ -12,7 +12,6 @@ namespace JHV\Bundle\SeoBundle\Model;
 class Seo implements SeoInterface
 {
 
-    protected $description;
     protected $keywords;
     protected $linkCanonical;
     protected $metas;
@@ -59,7 +58,7 @@ class Seo implements SeoInterface
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->addMeta('name', 'description', $description);
         return $this;
     }
 
@@ -68,7 +67,8 @@ class Seo implements SeoInterface
      */
     public function getDescription()
     {
-        return $this->description;
+        $metas = $this->getMetas();
+        return (isset($metas['name']['description'])) ? $metas['name']['description'] : null;
     }
 
     /**
